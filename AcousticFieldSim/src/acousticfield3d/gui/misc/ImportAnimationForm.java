@@ -72,7 +72,7 @@ public class ImportAnimationForm extends javax.swing.JFrame {
 
         for (String file : files) {
             String fileName = FileUtils.getFileName(file);
-            String ampFile = file.replaceAll("0_Phase", "0_Amp");
+            String ampFile = file.replaceAll("Phase", "Amp");
             String phaseFile = file + "";
             Animation anim = new Animation();
             anim.setName(fileName);

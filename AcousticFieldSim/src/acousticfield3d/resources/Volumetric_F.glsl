@@ -67,6 +67,7 @@ void main(){
             w += rayInc;
         }while ( (any(greaterThan(w, maxCube)) || any(lessThan(w, minCube))) == false );
         gl_FragColor = vec4(colorFunc(maxValue),  1.0);
+        gl_FragDepth = gl_FragCoord.z;
     }else if (renderType == 2){ //ISO
         vec3 prevW = w;
         float prevAmp = 0.0;
