@@ -11,6 +11,7 @@ import acousticfield3d.protocols.ChainedFPGA;
 import acousticfield3d.protocols.DeviceConnection;
 import acousticfield3d.protocols.SimpleFPGA;
 import acousticfield3d.protocols.SimpleFPGA_128;
+import acousticfield3d.protocols.SimpleFPGA_Tactile;
 import acousticfield3d.scene.Entity;
 import acousticfield3d.simulation.AnimKeyFrame;
 import acousticfield3d.simulation.Simulation;
@@ -101,7 +102,7 @@ public class TransControlPanel extends javax.swing.JPanel {
             }
         });
 
-        deviceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MEGA", "SimpleFPGA", "Nano8", "MEGA_Anim", "Nano16", "SimpleFPGA 128", "Chained FPGA" }));
+        deviceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MEGA", "SimpleFPGA", "Nano8", "MEGA_Anim", "Nano16", "SimpleFPGA 128", "Chained FPGA", "SimpleFPGA Tactile" }));
         deviceCombo.setToolTipText("select the protocol");
 
         jLabel1.setText("Phase");
@@ -281,9 +282,9 @@ public class TransControlPanel extends javax.swing.JPanel {
     private DeviceConnection getDeviceConnection(int port){
         final int index = deviceCombo.getSelectedIndex();
         DeviceConnection dc;
-        
+
         if (index == 0){ //  ArduinoMEGA64
-            dc = new ArduinoMEGA64(); 
+            dc = new ArduinoMEGA64();
         }else if (index == 1){ //  SimpleFPGA
             dc = new SimpleFPGA();
         }else if (index == 2){ // NANO
@@ -296,12 +297,14 @@ public class TransControlPanel extends javax.swing.JPanel {
             dc = new SimpleFPGA_128();
         }else if (index == 6){ //chained FPGA
             dc = new ChainedFPGA();
+        }else if (index == 7){ // SimpleFPGA Tactile
+            dc = new SimpleFPGA_Tactile();
         }else{
             dc = new DeviceConnection();
         }
-        
+
         dc.connect( port ); //pop the GUI for selecting the port
-        
+
         return dc;
     }
     
