@@ -86,14 +86,14 @@ public class SimpleFPGA_Tactile extends DeviceConnection{
             final int n = t.getOrderNumber() - number;
             if (n >= 0 && n < nTrans) { //is it within range
                 int phase = t.getDiscPhase(divs);
-                int amplitude = t.getDiscAmplitude(divs); 
-                
+                int amplitude = t.getDiscAmplitude(divs);
+
                 if (t.getpAmplitude() == 0){
                     phase = PHASE_OFF;
                 }else if (t.getAmplitude() < 0.99f){
                     ampModulationNeeded = true;
                 }
-                        
+
                 phaseDataPlusHeader[n+1] = (byte) (phase & 0xFF);
                 ampDataPlusHeader[n+1] = (byte) (amplitude & 0xFF);
             }
