@@ -58,6 +58,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="phaseSpinner" max="32767" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="modStepSpinner" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -99,6 +104,11 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="phaseSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="modStepSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -154,7 +164,7 @@
     <Component class="javax.swing.JComboBox" name="deviceCombo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="7">
+          <StringArray count="8">
             <StringItem index="0" value="MEGA"/>
             <StringItem index="1" value="SimpleFPGA"/>
             <StringItem index="2" value="Nano8"/>
@@ -162,6 +172,7 @@
             <StringItem index="4" value="Nano16"/>
             <StringItem index="5" value="SimpleFPGA 128"/>
             <StringItem index="6" value="Chained FPGA"/>
+            <StringItem index="7" value="SimpleFPGA Tactile"/>
           </StringArray>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="select the protocol"/>
@@ -227,6 +238,22 @@
         <Property name="text" type="java.lang.String" value="push/pull mode"/>
         <Property name="toolTipText" type="java.lang.String" value="this mode will use 2 channels for every transducer and drive the second pair out of phase - this is used to achieve double the voltage peak to peak"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mod Step"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="modStepSpinner">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="10" maximum="31" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Tactile modulation step rate (1=fast ~20kHz, 31=slow ~645Hz) - only for SimpleFPGA Tactile"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="modStepSpinnerStateChanged"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

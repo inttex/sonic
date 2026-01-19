@@ -61,6 +61,8 @@ public class TransControlPanel extends javax.swing.JPanel {
         extraNumberText = new javax.swing.JTextField();
         multiplexButton = new javax.swing.JButton();
         pushPullModeCheck = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
+        modStepSpinner = new javax.swing.JSpinner();
 
         sendButton.setText("Send");
         sendButton.setToolTipText("send the current transducer's phases and amps to the connected devices");
@@ -148,6 +150,16 @@ public class TransControlPanel extends javax.swing.JPanel {
         pushPullModeCheck.setText("push/pull mode");
         pushPullModeCheck.setToolTipText("this mode will use 2 channels for every transducer and drive the second pair out of phase - this is used to achieve double the voltage peak to peak");
 
+        jLabel2.setText("Mod Step");
+
+        modStepSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(10), Integer.valueOf(1), Integer.valueOf(31), Integer.valueOf(1)));
+        modStepSpinner.setToolTipText("Tactile modulation step rate (1=fast ~20kHz, 31=slow ~645Hz) - only for SimpleFPGA Tactile");
+        modStepSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                modStepSpinnerStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,7 +196,11 @@ public class TransControlPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(phaseSpinner)))
+                        .addComponent(phaseSpinner))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(modStepSpinner)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -218,6 +234,10 @@ public class TransControlPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(phaseSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(modStepSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -247,6 +267,17 @@ public class TransControlPanel extends javax.swing.JPanel {
         final int value = (Integer) phaseSpinner.getValue();
         mf.transducersPanel.setTransPhase( stepsToPhase(value) );
     }//GEN-LAST:event_phaseSpinnerStateChanged
+
+    private void modStepSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_modStepSpinnerStateChanged
+        if (device instanceof SimpleFPGA_Tactile) {
+            int step = (Integer) modStepSpinner.getValue();
+            ((SimpleFPGA_Tactile) device).setAmpModulationStep(step);
+
+            // Calculate and display the approximate frequency
+            float freqHz = 5120000.0f / (step * 256.0f);
+            System.out.println("Modulation step set to: " + step + " (~" + String.format("%.0f", freqHz) + " Hz)");
+        }
+    }//GEN-LAST:event_modStepSpinnerStateChanged
 
     public float stepsToPhase(float steps){
         
@@ -430,6 +461,8 @@ public class TransControlPanel extends javax.swing.JPanel {
     private javax.swing.JTextField extraNumberText;
     private javax.swing.JButton initSerialButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JSpinner modStepSpinner;
     private javax.swing.JButton multiplexButton;
     private javax.swing.JSpinner phaseSpinner;
     private javax.swing.JCheckBox pushPullModeCheck;
